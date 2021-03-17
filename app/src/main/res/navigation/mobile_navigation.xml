@@ -20,8 +20,8 @@
 
     <fragment
         android:id="@+id/navigation_musicList"
-        android:name="com.oslu.forall.ui.settings.SettingsFragment"
-        android:label="settings_fragment"
+        android:name="com.oslu.forall.ui.musicList.MusicListFragment"
+        android:label="musicList_fragment"
         tools:layout="@layout/settings_fragment" />
 
 

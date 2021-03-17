@@ -2,4 +2,5 @@
 <resources>
     <color name="draculaDarkBackground">#282a36</color>
     <color name="darkBars">#6272a4</color>
+    <color name="fadedBlackBackground">#FF424242</color>
 </resources>
