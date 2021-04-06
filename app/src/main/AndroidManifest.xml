@@ -3,6 +3,8 @@
     package="com.oslu.forall">
 
      <!--//TODO adicionar permissões no manifest e cobrá-las em código   -->
+    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
 
     <application
         android:allowBackup="true"
@@ -11,6 +13,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ForAll">
+
+        <service android:name=".controllers.AudioService" ></service>
 
         <activity android:name=".views.MainActivity">
             <intent-filter>

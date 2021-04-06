@@ -1,5 +1,6 @@
 package com.oslu.forall.ui.home
 
+import android.content.Intent
 import android.graphics.drawable.Drawable
 import android.os.Build
 import androidx.lifecycle.ViewModelProvider
@@ -12,6 +13,7 @@ import android.widget.Button
 import androidx.annotation.RequiresApi
 import androidx.core.content.res.ResourcesCompat
 import com.oslu.forall.R
+import com.oslu.forall.controllers.AudioService
 
 class HomeFragment : Fragment() {
 
@@ -91,6 +93,12 @@ class HomeFragment : Fragment() {
                                     ResourcesCompat.getDrawable(resources, R.drawable.ic_tempo_strong_24_white, null),
                                     ResourcesCompat.getDrawable(resources, R.drawable.ic_tempo_weak_24_white, null),
                                     tempoType)
+
+            // Teste do Serviço de Áudio
+            Intent(context, AudioService::class.java).also { intent ->
+                context?.startService(intent)
+                context?.stopService(intent)
+            }
         }
 
     }
