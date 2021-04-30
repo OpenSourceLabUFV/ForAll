@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="draculaDarkBackground">#282a36</color>
-    <color name="darkBars">#6272a4</color>
+    <color name="darkBars">#282a36</color>
     <color name="fadedBlackBackground">#FF424242</color>
+
+<!--    OLD COLOR:-->
+<!--    <color name="darkBars">#6272a4</color>-->
 </resources>

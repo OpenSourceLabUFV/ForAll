@@ -62,7 +62,7 @@
         android:padding="16dp"
         android:text="Input"
         app:layout_constraintBottom_toTopOf="@+id/toggleLog"
-        app:layout_constraintEnd_toStartOf="@+id/toggleTempo"
+        app:layout_constraintEnd_toEndOf="@+id/toggleAssistType"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/toggleLog"
         app:layout_constraintTop_toBottomOf="@+id/toggleAssistType" />
@@ -71,6 +71,8 @@
         android:id="@+id/toggleTempo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/assistDuration"
+        android:layout_alignRight="@+id/assistDuration"
         android:background="@drawable/button_bg"
         android:drawableLeft="@drawable/ic_tempo_weak_24_white"
         android:padding="16dp"
@@ -78,7 +80,7 @@
         app:layout_constraintBottom_toTopOf="@+id/toggleLog"
         app:layout_constraintEnd_toEndOf="@+id/toggleLog"
         app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/assistDuration"
         app:layout_constraintTop_toBottomOf="@+id/assistDuration" />
 
     <ImageView
@@ -97,5 +99,3 @@
 
     <!-- //TODO remember to refactor all strings to res/values/strings in home screen -->
     <!-- //TODO remember to refactor all buttons and add icons (avoid text)  -->
-    <!-- //TODO make toggleDanceAssist icon dynamic/reactive -->
-    <!-- //TODO change bottomNav color to match dark theme -->

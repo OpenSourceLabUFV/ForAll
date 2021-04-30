@@ -1,6 +1,8 @@
 package com.oslu.forall.views
 
+import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ResourcesCompat
 import androidx.navigation.fragment.NavHostFragment
@@ -11,7 +13,6 @@ import com.oslu.forall.R
 
 
 class MainActivity : AppCompatActivity() {
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -31,15 +32,14 @@ class MainActivity : AppCompatActivity() {
         var isPlaying = true
         fab.setOnClickListener(){
             if(isPlaying){
-                fab.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.ic_baseline_pause_24_black, null))
+                fab.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.ic_baseline_pause_24, null))
                 isPlaying = !isPlaying
                 navController.navigate(R.id.navigation_home)
             }else{
-                fab.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.ic_play_24_black, null))
+                fab.setImageDrawable(ResourcesCompat.getDrawable(resources, R.drawable.ic_play_24_white, null))
                 isPlaying = !isPlaying
             }
         }
-
 
     }
 }

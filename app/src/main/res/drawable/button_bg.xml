@@ -5,7 +5,7 @@
     tools:targetApi="lollipop">
     <item android:id="@android:id/mask">
         <shape android:shape="rectangle">
-            <solid android:color="@color/purple_700" />
+            <solid android:color="@color/purple_200" />
             <corners android:radius="20dp" />
         </shape>
     </item>
@@ -14,8 +14,8 @@
         <shape android:shape="rectangle">
             <gradient
                 android:angle="90"
-                android:endColor="@color/purple_200"
-                android:startColor="@color/purple_700"
+                android:endColor="@color/purple_700"
+                android:startColor="@color/purple_200"
                 android:type="linear" />
             <corners android:radius="20dp" />
         </shape>
