@@ -1,6 +1,6 @@
 # ForAll
 
-ForAll é uma implementação em Android do projeto de pesquisa atualmente desenvolvido por [Lucas Paiva](https://github.com/lucas-fpaiva) e Hugo Lopes. A pesquisa objetiva construir uma metodologia assistiva para que deficientes auditivos possam dançar forró com o auxílio de vibrações, luzes ou outros estímulos que marquem o compasso da música. 
+ForAll é uma implementação em Android do projeto de pesquisa atualmente desenvolvido por [Lucas Paiva](https://github.com/lucas-fpaiva) e Hugo Lopes, orientados pelos professores Rodolpho Neves e Leonardo Bonato ([DEL-UFV](https://del.ufv.br/docentes-2/)). A pesquisa objetiva construir uma metodologia assistiva para que deficientes auditivos possam dançar forró com o auxílio de vibrações, luzes ou outros estímulos que marquem o compasso da música. 
 
 Este repositório contém uma implementação em Kotlin de um aplicativo para aplicar as técnicas resultantes da pesquisa.
 
