@@ -24,6 +24,9 @@ Homepage           | Lista de Músicas
 
 ## 🚀 Começando
 
+### 0. Dependências
+- Verifique que possui ```npm``` [(Node.js)](https://nodejs.org/en/) e ```ionic``` [(Ionic React)](https://ionicframework.com/docs/react), nesta ordem, instalados e funcionando. Caso não estejam, siga os tutoriais nos respectivos sites. 
+
 ### 1. Primeiro passo
 
 - Clone o repositório:
