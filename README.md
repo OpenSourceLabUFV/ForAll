@@ -6,7 +6,7 @@ Este repositório contém uma implementação web de um aplicativo que executa a
 
 ## Funcionalidades
 
-> **IMPORTANTE:** Nesta branch  atualmente consta o início de reimplementação deste aplicativo em Ionic React + Redux. O projeto original dos autores pode ser analisado na branch [(main)](https://github.com/OpenSourceLabUFV/ForAll/tree/main) ou [(main)](https://github.com/OpenSourceLabUFV/ForAll/tree/main)
+> **IMPORTANTE:** Nesta branch  atualmente consta o início de reimplementação deste aplicativo em Ionic React + Redux. O projeto original dos autores pode ser analisado na branch [(main)](https://github.com/OpenSourceLabUFV/ForAll/tree/main) ou [(devTools)](https://github.com/OpenSourceLabUFV/ForAll/tree/devTools).
 
 - Protótipo do projeto:
 ![](https://raw.githubusercontent.com/Open-Source-Lab-UFV/ForAll/web/prototipo_rapido.png)
@@ -24,5 +24,27 @@ Homepage           | Lista de Músicas
 
 ## 🚀 Começando
 
+### 0. Dependências
+- Verifique que possui ```npm``` [(Node.js)](https://nodejs.org/en/) e ```ionic``` [(Ionic React)](https://ionicframework.com/docs/react), nesta ordem, instalados e funcionando. Caso não estejam, siga os tutoriais nos respectivos sites. 
+
 ### 1. Primeiro passo
 
+- Clone o repositório:
+```
+git clone https://github.com/OpenSourceLabUFV/ForAll.git
+```
+
+- Entre na pasta:
+```
+cd ForAll
+```
+
+- Verificar e instalar dependências e pacotes:
+```
+npm install
+```
+
+- Iniciar servidor Ionic na rede local para acessar o app no PC e Android (browser) via IP:
+```
+ionic serve --external
+```
