@@ -26,3 +26,22 @@ Homepage           | Lista de Músicas
 
 ### 1. Primeiro passo
 
+- Clone o repositório:
+```
+git clone https://github.com/OpenSourceLabUFV/ForAll.git
+```
+
+- Entre na pasta:
+```
+cd ForAll
+```
+
+- Verificar e instalar dependências e pacotes:
+```
+npm install
+```
+
+- Iniciar servidor Ionic na rede local para acessar o app no PC e Android (browser) via IP:
+```
+ionic serve --external
+```
