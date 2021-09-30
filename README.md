@@ -6,7 +6,7 @@ Este repositório contém uma implementação web de um aplicativo que executa a
 
 ## Funcionalidades
 
-> **IMPORTANTE:** Nesta branch  atualmente consta o início de reimplementação deste aplicativo em Ionic React + Redux. O projeto original dos autores pode ser analisado na branch [(main)](https://github.com/OpenSourceLabUFV/ForAll/tree/main) ou [(main)](https://github.com/OpenSourceLabUFV/ForAll/tree/devTools)
+> **IMPORTANTE:** Nesta branch  atualmente consta o início de reimplementação deste aplicativo em Ionic React + Redux. O projeto original dos autores pode ser analisado na branch [(main)](https://github.com/OpenSourceLabUFV/ForAll/tree/main) ou [(devTools)](https://github.com/OpenSourceLabUFV/ForAll/tree/devTools).
 
 - Protótipo do projeto:
 ![](https://raw.githubusercontent.com/Open-Source-Lab-UFV/ForAll/web/prototipo_rapido.png)
