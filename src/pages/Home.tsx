@@ -2,6 +2,9 @@ import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/rea
 import ExploreContainer from '../components/ExploreContainer';
 import './Home.css';
 
+// import SwitchIconButton from '../components/SwitchIconButton';
+import BtnGrid from '../components/BtnGrid';
+
 const Home: React.FC = () => {
   return (
     <IonPage>
@@ -16,7 +19,10 @@ const Home: React.FC = () => {
             <IonTitle size="large">Home</IonTitle>
           </IonToolbar>
         </IonHeader>
-        <ExploreContainer name="home page" />
+
+        <BtnGrid nameList ="teste" stateList = {-0.320984/2} numEl = {2}/>
+        {/* <SwitchIconButton name="home page" state = {1}/> */}
+        {/* <ExploreContainer name="home page" /> */}
       </IonContent>
     </IonPage>
   );
