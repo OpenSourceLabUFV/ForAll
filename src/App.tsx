@@ -1,3 +1,13 @@
+// TODO: Add pallete https://ionicframework.com/docs/theming/basics
+// TODO: Load and display songslist
+// TODO: Implement songlist bpm selection
+// TODO: Implement AudioService ui and functions (mic recording + fft + graph)
+// TODO: Implement Vibration 
+// TODO: Implement Flashlight
+// TODO: Implement duration/tempo selection
+// TODO: Implement data logging
+// TODO: Implement data processing with premade 
+
 import { Redirect, Route } from 'react-router-dom';
 import {
   IonApp,
@@ -10,9 +20,9 @@ import {
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import { ellipse, square, triangle } from 'ionicons/icons';
-import Tab1 from './pages/Tab1';
-import Tab2 from './pages/Tab2';
-import Tab3 from './pages/Tab3';
+import Settings from './pages/Settings';
+import Home from './pages/Home';
+import MusicList from './pages/MusicList';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -38,31 +48,31 @@ const App: React.FC = () => (
     <IonReactRouter>
       <IonTabs>
         <IonRouterOutlet>
-          <Route exact path="/tab1">
-            <Tab1 />
+          <Route exact path="/Settings">
+            <Settings />
           </Route>
-          <Route exact path="/tab2">
-            <Tab2 />
+          <Route exact path="/Home">
+            <Home />
           </Route>
-          <Route path="/tab3">
-            <Tab3 />
+          <Route path="/MusicList">
+            <MusicList />
           </Route>
           <Route exact path="/">
-            <Redirect to="/tab1" />
+            <Redirect to="/Settings" />
           </Route>
         </IonRouterOutlet>
         <IonTabBar slot="bottom">
-          <IonTabButton tab="tab1" href="/tab1">
+          <IonTabButton tab="Settings" href="/Settings">
             <IonIcon icon={triangle} />
-            <IonLabel>Tab 1</IonLabel>
+            <IonLabel>Settings</IonLabel>
           </IonTabButton>
-          <IonTabButton tab="tab2" href="/tab2">
+          <IonTabButton tab="Home" href="/Home">
             <IonIcon icon={ellipse} />
-            <IonLabel>Tab 2</IonLabel>
+            <IonLabel>Home</IonLabel>
           </IonTabButton>
-          <IonTabButton tab="tab3" href="/tab3">
+          <IonTabButton tab="MusicList" href="/MusicList">
             <IonIcon icon={square} />
-            <IonLabel>Tab 3</IonLabel>
+            <IonLabel>MusicList</IonLabel>
           </IonTabButton>
         </IonTabBar>
       </IonTabs>
