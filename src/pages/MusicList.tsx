@@ -1,15 +1,12 @@
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
+import MyHeader from '../components/MyHeader';
 import ExploreContainer from '../components/ExploreContainer';
 import './MusicList.css';
 
 const MusicList: React.FC = () => {
   return (
     <IonPage>
-      <IonHeader>
-        <IonToolbar>
-          <IonTitle>MusicList</IonTitle>
-        </IonToolbar>
-      </IonHeader>
+      <MyHeader name ="MusicList"/>
       <IonContent fullscreen>
         <IonHeader collapse="condense">
           <IonToolbar>

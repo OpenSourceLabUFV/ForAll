@@ -16,10 +16,10 @@ import {
   IonRouterOutlet,
   IonTabBar,
   IonTabButton,
-  IonTabs,
+  IonTabs,IonRippleEffect
 } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
-import { ellipse, square, triangle } from 'ionicons/icons';
+import { ellipse, listOutline, settings, square, triangle } from 'ionicons/icons';
 import Settings from './pages/Settings';
 import Home from './pages/Home';
 import MusicList from './pages/MusicList';
@@ -63,7 +63,7 @@ const App: React.FC = () => (
         </IonRouterOutlet>
         <IonTabBar slot="bottom">
           <IonTabButton tab="Settings" href="/Settings">
-            <IonIcon icon={triangle} />
+            <IonIcon icon={settings} />
             <IonLabel>Settings</IonLabel>
           </IonTabButton>
           <IonTabButton tab="Home" href="/Home">
@@ -71,7 +71,7 @@ const App: React.FC = () => (
             <IonLabel>Home</IonLabel>
           </IonTabButton>
           <IonTabButton tab="MusicList" href="/MusicList">
-            <IonIcon icon={square} />
+            <IonIcon icon={listOutline} />
             <IonLabel>MusicList</IonLabel>
           </IonTabButton>
         </IonTabBar>
