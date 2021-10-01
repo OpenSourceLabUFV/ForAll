@@ -48,3 +48,14 @@ npm install
 ```
 ionic serve --external
 ```
+
+
+## Projetos semelhantes
+
+Abaixo está uma lista de links interessantes e projetos similares:
+
+- Ferramenta semelhante: [Live audio spectrum visualization with React.js components](
+https://github.com/matt-eric/web-audio-fft-visualization-with-react-hooks.git)
+<!-- - [Ferramenta semelhante](https://github.com/projeto) -->
+
+
