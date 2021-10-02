@@ -4,15 +4,22 @@ import ExploreContainer from '../components/ExploreContainer';
 import './Settings.css';
 
 const Settings: React.FC = () => {  
+  if (navigator.mediaDevices) {
+    console.log('getUserMedia supported.');
+    navigator.mediaDevices.getUserMedia ({audio: true}).then(function(stream) {
+      /* use the stream */
+      const audioCtx = new AudioContext();
+      const source = audioCtx.createMediaStreamSource(stream);
+      // const gainNode = new GainNode(audioCtx);
+      // source.connect(gainNode).connect(audioCtx.destination);
+      source.connect(audioCtx.destination);
+    });
+  }
   return (
     <IonPage>
       <MyHeader name ="Settings"/>
       <IonContent fullscreen>
-        <IonHeader collapse="condense">
-          <IonToolbar>
-            <IonTitle size="large">Settings</IonTitle>
-          </IonToolbar>
-        </IonHeader>
+        
 
         {/* <IonList>
         <IonItem lines="full">
