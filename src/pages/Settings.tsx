@@ -2,24 +2,36 @@ import { IonList,IonItem,IonLabel,IonIcon, IonToggle, IonContent, IonHeader, Ion
 import MyHeader from '../components/MyHeader';
 import ExploreContainer from '../components/ExploreContainer';
 import './Settings.css';
+import AudioDataContainer from '../components/AudioDataContainer';
 
 const Settings: React.FC = () => {  
-  if (navigator.mediaDevices) {
-    console.log('getUserMedia supported.');
-    navigator.mediaDevices.getUserMedia ({audio: true}).then(function(stream) {
-      /* use the stream */
-      const audioCtx = new AudioContext();
-      const source = audioCtx.createMediaStreamSource(stream);
-      // const gainNode = new GainNode(audioCtx);
-      // source.connect(gainNode).connect(audioCtx.destination);
-      source.connect(audioCtx.destination);
-    });
-  }
+  // if (navigator.mediaDevices) {
+  //   console.log('getUserMedia supported.');
+  //   navigator.mediaDevices.getUserMedia ({audio: true}).then(function(stream) {
+  //     /* use the stream */
+  //     const audioCtx = new AudioContext();
+  //     const source = audioCtx.createMediaStreamSource(stream);
+  //     // const gainNode = new GainNode(audioCtx);
+  //     // source.connect(gainNode).connect(audioCtx.destination);
+  //     source.connect(audioCtx.destination);
+  //   });
+  // }
+  
+  // const audioContext = new AudioContext();
+
+  // var destination = audioContext.createMediaStreamDestination();
+  // var promise = navigator.mediaDevices.getUserMedia({audio:true});
+
+  // const source = audioContext.createMediaStreamSource(destination.stream);
+  // source.connect(audioContext.destination)
+
+  
+
   return (
     <IonPage>
       <MyHeader name ="Settings"/>
       <IonContent fullscreen>
-        
+      <AudioDataContainer/>
 
         {/* <IonList>
         <IonItem lines="full">

@@ -1,6 +1,6 @@
 import React from 'react';
 import VisualDemo from './VisualDemo';
-import soundFile from '../assets/xote_dos_milagres.mp3'
+// import soundFile from '../assets/xote_dos_milagres.mp3'
 
 class AudioDataContainer extends React.Component {
 
@@ -11,26 +11,15 @@ class AudioDataContainer extends React.Component {
   }
 
   initializeAudioAnalyser = () => {
-
-    async function getMedia(constraints) {
-      let stream = null;
-    
-      try {
-        stream = await navigator.mediaDevices.getUserMedia(constraints);
-        /* use the stream */
-      } catch(err) {
-        /* handle the error */
-      }
-    }
-    const audioFile = new Audio();
     const audioContext = new AudioContext();
-    const source = audioContext.createMediaElementSource(audioFile);
+    var destination = audioContext.createMediaStreamDestination();
+    const source = audioContext.createMediaStreamSource(destination.stream);
     const analyser = audioContext.createAnalyser();
-    audioFile.src = soundFile;
+    // audioFile.src = soundFile;
     analyser.fftSize = 64
     source.connect(audioContext.destination);
     source.connect(analyser);
-    audioFile.play()
+    // audioFile.play()
       this.setState({
         audioData: analyser
       })
