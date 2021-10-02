@@ -1,6 +1,6 @@
 // TODO: reimplementar visualização, otimizando!
-import React, { useRef } from 'react';
-import { IonFab, IonFabButton, IonIcon } from '@ionic/react';
+import React, { useState } from 'react';
+import { IonButton,IonFab, IonFabButton, IonIcon } from '@ionic/react';
 import { micOutline } from 'ionicons/icons';
 import Paper from '@material-ui/core/Paper';
 import { makeStyles } from '@material-ui/core/styles';
@@ -13,69 +13,74 @@ const useStyles = makeStyles(theme => ({
       flexWrap: 'wrap',
       justifyContent: 'center',
       alignContent: 'center',
-      paddingTop: '4%',
+      paddingTop: '7%',
       maxHeight: 'inherit'
     }
   }));
 
-const AudioViz: React.FC = () => {
-    var analyser: any
-    let frequencyBandArray = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9,10,11,12,13,15,15]
-    function play(){
+  
+interface AudioVizProps {
+    vizFlag:number
+}
+
+const AudioViz: React.FC<AudioVizProps> = ({vizFlag}) => {
+    // Globals
+    var aCtx;
+    var analyser: AnalyserNode;
+    var microphone;
+
+    let bufferLength: number
+    const [amplitudeArray, setAmplitudeArray] = useState(new Uint8Array(3));
+    // const [frequencyBandArray, setfrequencyBandArray] = useState(new Uint8Array(16));
+    const frequencyBandArray = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9,10,11,12,13,15,16]
+  
+    if(vizFlag>0){
         navigator.mediaDevices.getUserMedia({audio:true}).then((stream)=>{
-            const audioCtx = new AudioContext();
-            const source = audioCtx.createMediaStreamSource(stream);
-            // const gainNode = new GainNode(audioCtx);
-            // source.connect(gainNode).connect(audioCtx.destination);
-            source.connect(audioCtx.destination);
-            const analyser = getAnalyser(source,audioCtx)
-            runSpectrum(
-                getFrequencyData(analyser),
-                frequencyBandArray,
-                adjustFreqBandStyle,
-                analyser)
-        })
+            aCtx = new AudioContext();
+            analyser = aCtx.createAnalyser();
+            analyser.fftSize = 32
+            microphone = aCtx.createMediaStreamSource(stream);
+            microphone.connect(analyser);
+            // analyser.connect(aCtx.destination);
+            getFrequencyData(analyser);
+        });
+    }
+    function getFrequencyData(analyser:AnalyserNode){
+        setInterval(function(){
+            var FFTData = new Uint8Array(analyser.frequencyBinCount);
+            // analyser.getFloatFrequencyData(FFTData);
+            analyser.getByteFrequencyData(FFTData);
+            setAmplitudeArray(FFTData)
+            adjustFreqBandStyle();
+        },
+        1 //intervalor entre calculos em ms 
+        );
+
+        // var FFTData = new Uint8Array(analyser.frequencyBinCount);
+        // // analyser.getFloatFrequencyData(FFTData);
+        // analyser.getByteFrequencyData(FFTData);
+        // setAmplitudeArray(FFTData)
+        // adjustFreqBandStyle();
     }
 
-    function getAnalyser(source: MediaStreamAudioSourceNode,audioCtx: AudioContext){
-        // Criar analyser:
-        const analyser = audioCtx.createAnalyser();
-        analyser.fftSize = 64
-        source.connect(audioCtx.destination);
-        source.connect(analyser);
-        return analyser
-    }
-
-    function getFrequencyData(analyser:any):any {
-        // Pegar saída do analyser:
-        const bufferLength = analyser.frequencyBinCount;
-        const amplitudeArray = new Uint8Array(bufferLength);
-        analyser.getByteFrequencyData(amplitudeArray)
-        return amplitudeArray
-        // adjustFreqBandStyle(amplitudeArray)
-    }
-
-    function runSpectrum(newAmplitudeData:any,frequencyBandArray:any,analyser:any, adjustFreqBandStyle:any){
-        newAmplitudeData = getFrequencyData(analyser)
-        adjustFreqBandStyle(newAmplitudeData,frequencyBandArray)
-        // requestAnimationFrame(runSpectrum(newAmplitudeData,frequencyBandArray, analyser))
-    }
-
-    function adjustFreqBandStyle(newAmplitudeData:any, frequencyBandArray:any){
+    function adjustFreqBandStyle(){
         let domElements = frequencyBandArray.map((num:number) =>
           document.getElementById(num.toString()))
+
         for(let i=0; i<frequencyBandArray.length; i++){
-          let num = frequencyBandArray[i]
-          domElements[num].style.opacity= `${newAmplitudeData[num]}`
-          domElements[num].style.backgroundColor = `rgb(128,128,128)`
-          domElements[num].style.height = `${newAmplitudeData[num]*0.25}px`
-        }
+            // let num = frequencyBandArray[i]
+            let num = i
+            domElements[num]!.style.opacity= `${amplitudeArray[num]}`
+            domElements[num]!.style.backgroundColor = `rgb(128,128,128)`
+            domElements[num]!.style.height = `${amplitudeArray[num]*0.45 +5}px`
+            }
     };
 
     const classes = useStyles();
     
-    return (    
-        <div>
+    return (
+            
+        // <div style={{}}>
             <div className={classes.flexContainer}>
                 {frequencyBandArray.map((num) =>
                     <Paper
@@ -87,13 +92,29 @@ const AudioViz: React.FC = () => {
                 )}
             </div>
 
-            <IonFab vertical="center" horizontal="center" slot="fixed">
-                <IonFabButton 
-                onClick={()=>play()}>
-                    <IonIcon icon={micOutline} />
-                </IonFabButton>
-            </IonFab>
-        </div> 
+
+            //  <a>
+            //     Currently: {amplitudeArray.toString()}
+            // </a> 
+
+      
+            // <IonFab vertical="top" horizontal="center" slot="fixed">
+            //     <IonFabButton 
+            //     onClick={()=>getData()}>
+            //         <a>
+            //             GO
+            //         </a>
+            //     </IonFabButton>
+            // </IonFab> 
+            
+
+            //  <IonFab vertical="center" horizontal="center" slot="fixed">
+            //     <IonFabButton 
+            //     onClick={()=>play()}>
+            //         <IonIcon icon={micOutline} />
+            //     </IonFabButton>
+            // </IonFab> 
+        // </div> 
     );
     
     
