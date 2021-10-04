@@ -1,0 +1,7 @@
+{
+  "name": "ForAll",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react"
+}

@@ -1,0 +1,20 @@
+com/example/forall/PageAdapter.java
+ com.example.forall.PageAdapter
+com/example/forall/musicas.java
+ com.example.forall.musicas
+ com.example.forall.musicas$1
+ com.example.forall.musicas$1$1
+ com.example.forall.musicas$1$2
+ com.example.forall.musicas$MyAdapter
+com/example/forall/redeneural.java
+ com.example.forall.redeneural
+ com.example.forall.redeneural$1
+com/example/forall/BuildConfig.java
+ com.example.forall.BuildConfig
+com/example/forall/ServicoAudio.java
+ com.example.forall.ServicoAudio
+ com.example.forall.ServicoAudio$1
+ com.example.forall.ServicoAudio$FFT
+com/example/forall/MainActivity.java
+ com.example.forall.MainActivity
+ com.example.forall.MainActivity$1
