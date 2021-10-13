@@ -1,6 +1,6 @@
 # ForAll
 
-ForAll é uma implementação em Android do projeto de pesquisa atualmente desenvolvido por [Lucas Paiva](https://github.com/lucas-fpaiva) e Hugo Lopes, orientados pelos professores Rodolpho Neves e Leonardo Bonato ([DEL-UFV](https://del.ufv.br/docentes-2/)). A pesquisa objetiva construir uma metodologia assistiva para que deficientes auditivos possam dançar forró com o auxílio de vibrações, luzes ou outros estímulos que marquem o compasso da música. 
+ForAll é uma implementação em Android do projeto de pesquisa atualmente desenvolvido por [Lucas Paiva](https://github.com/lucas-fpaiva) e Hugo Lopes, orientados pelos professores Rodolpho Neves e Leonardo Bonato ([DEL-UFV](https://del.ufv.br/docentes-2/)). A pesquisa objetiva construir uma metodologia assistiva para que deficientes auditivos possam dançar forró com o auxílio de vibrações, luzes ou outros estímulos que marquem o compasso da música.
 
 Este repositório contém uma implementação web de um aplicativo que executa as técnicas resultantes desta pesquisa.
 
@@ -25,7 +25,7 @@ Homepage           | Lista de Músicas
 ## 🚀 Começando
 
 ### 0. Dependências
-- Verifique que possui ```npm``` [(Node.js)](https://nodejs.org/en/) e ```ionic``` [(Ionic React)](https://ionicframework.com/docs/react), nesta ordem, instalados e funcionando. Caso não estejam, siga os tutoriais nos respectivos sites. 
+- Verifique que possui ```npm``` [(Node.js)](https://nodejs.org/en/) e ```ionic``` [(Ionic React)](https://ionicframework.com/docs/react), nesta ordem, instalados e funcionando. Caso não estejam, siga os tutoriais nos respectivos sites.
 
 ### 1. Primeiro passo
 
@@ -49,6 +49,8 @@ npm install
 ionic serve --external
 ```
 
+## Binarios
+Os arquivos binarios APKs, estão disponiveis em ```/binaries```
 
 ## Projetos semelhantes
 
