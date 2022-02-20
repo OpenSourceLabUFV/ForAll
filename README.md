@@ -39,10 +39,6 @@ cd ForAll
 npm install
 ```
 
-- Iniciar servidor Ionic na rede local para acessar o app no PC e Android (browser) via IP:
-```
-ionic serve --external
-```
 
 ## Binarios
 Os arquivos binarios APKs, estão disponiveis em ```/binaries```
@@ -51,7 +47,9 @@ Os arquivos binarios APKs, estão disponiveis em ```/binaries```
 
 Abaixo está uma lista de links interessantes e projetos similares:
 
+- [Dataset](https://github.com/lucas-fpaiva/Forroset) de compassos utilizada para implementar as vibrações.
+
+- Site que implementa uso da [API de Informações do Spotify](https://glitch.com/edit/#!/spotify-audio-analysis).
+
 - Ferramenta semelhante: [Live audio spectrum visualization with React.js components](
 https://github.com/matt-eric/web-audio-fft-visualization-with-react-hooks.git)
-<!-- - [Ferramenta semelhante](https://github.com/projeto) -->
-
