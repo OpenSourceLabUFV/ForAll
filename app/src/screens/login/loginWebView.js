@@ -4,22 +4,16 @@ import axios from 'axios';
 import { WebView } from 'react-native-webview';
 import { Buffer } from 'buffer';
 
-import SpotifyServiceController from '../../services/SpotifyServiceController';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import SpotifyService from '../../services/SpotifyService';
+import SpotifyRoutes from '../../routes/SpotifyRoutes';
 
 const queryString = require('query-string');
 
-const SpotifyService = SpotifyServiceController.shared();
-
 // eslint-disable-next-line react/prop-types
 const LoginWebView = ({ setIsLogged_ }) => {
-	const { codeChallenge, codeVerifier, authRoute } =
-		SpotifyService.getAuthorizationRoute();
-	console.log(
-		'codeChallenge ------------------>',
-		codeChallenge,
-		codeVerifier
-	);
-	console.log('codeVerifier ------------------>', codeVerifier);
+	const { codeVerifier, authRoute } =
+		SpotifyService.getSpotifyAuthorizationRoute();
 
 	const onNavigationStateChange = (navigationState) => {
 		const { url } = navigationState;
@@ -33,9 +27,9 @@ const LoginWebView = ({ setIsLogged_ }) => {
 					// eslint-disable-next-line prefer-destructuring
 					params[match[1]] = match[2];
 				}
-				console.log(url);
+				console.log('url', url);
 				const authCode = params.code;
-				SpotifyService.set('spotifyAuthCode', authCode);
+				SpotifyService.setSpotifyData('spotifyAuthCode', authCode);
 
 				getToken(authCode);
 			} catch (err) {
@@ -45,53 +39,59 @@ const LoginWebView = ({ setIsLogged_ }) => {
 	};
 
 	const getToken = async (codeData) => {
-		console.log(
-			'6a5s4d654sad654sa65d4654654-----------------------------------------------------------------------------------------'
+		const redirectURI = SpotifyService.getSpotifyData(
+			'spotify_redirect_uri'
 		);
 		const data = queryString.stringify({
 			code: codeData,
 			grant_type: 'authorization_code',
-			redirect_uri: SpotifyService.get('spotify_redirect_uri'),
+			redirect_uri: redirectURI,
 			code_verifier: codeVerifier
 		});
-		console.log(data);
+
 		const config = {
 			headers: {
 				'Content-Type': 'application/x-www-form-urlencoded',
 				Authorization: `Basic ${Buffer.from(
-					`${SpotifyService.get(
+					`${SpotifyService.getSpotifyData(
 						'spotify_client_id'
-					)}:${SpotifyService.get('spotify_client_secret')}`,
+					)}:${SpotifyService.getSpotifyData(
+						'spotify_client_secret'
+					)}`,
 					'utf8'
 				).toString('base64')}`
 			}
 		};
 
-		// eslint-disable-next-line no-unused-vars
-		const res = await axios
-			.post(SpotifyService.getRoute('token'), data, config)
+		await axios
+			.post(SpotifyRoutes.token, data, config)
 			.then((response) => {
 				if (response.status === 200) {
 					console.log(response.data);
-					SpotifyService.set(
+
+					AsyncStorage.setItem(
 						'access_token',
-						response.data.access_token
+						JSON.stringify(response.data.access_token)
 					);
-					SpotifyService.set('expires_in', response.data.expires_in);
-					SpotifyService.set('token_type', response.data.token_type);
-					SpotifyService.set(
+
+					AsyncStorage.setItem(
+						'expires_in',
+						JSON.stringify(response.data.expires_in)
+					);
+					AsyncStorage.setItem(
+						'token_type',
+						JSON.stringify(response.data.token_type)
+					);
+					AsyncStorage.setItem(
 						'spotify_refresh_token',
-						response.data.refresh_token
+						JSON.stringify(response.data.refresh_token)
 					);
-					SpotifyService.set('isLogged', true);
+					AsyncStorage.setItem('isLogged', JSON.stringify(true));
 
 					// On true the screen will be redirected to the app home
 					setIsLogged_(true);
 				} else if (response.status === 400) {
-					console.log(
-						'----------------------------------------------- >>>>>',
-						response
-					);
+					console.log(response);
 				}
 			})
 			.catch((error) => {

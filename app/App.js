@@ -3,11 +3,11 @@ import { StatusBar } from 'react-native';
 import AppLoading from 'expo-app-loading';
 
 import { func } from './src/constants';
-
 import AppState from './src/context/AppState';
 import RootStack from './src/navigation/RootStack';
-
 import LoginWebView from './src/screens/login/loginWebView';
+
+import StartUpService from './src/services/StartUpService';
 
 const App = () => {
 	const [isLoading, setIsLoading] = useState(true);
@@ -15,6 +15,7 @@ const App = () => {
 
 	// pre-loading assets/fonts?
 	if (isLoading) {
+		StartUpService.startup();
 		return (
 			<AppLoading
 				onError={() => {
