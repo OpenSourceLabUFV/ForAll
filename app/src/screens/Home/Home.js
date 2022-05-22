@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useRef, Fragment } from 'react';
 import { Animated, StyleSheet, View } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 import { colors, device, gStyle } from '../../constants';
@@ -12,7 +12,7 @@ import jumpBackIn from '../../mockdata/jumpBackIn.json';
 import recentlyPlayed from '../../mockdata/recentlyPlayed.json';
 
 const Home = () => {
-	const scrollY = React.useRef(new Animated.Value(0)).current;
+	const scrollY = useRef(new Animated.Value(0)).current;
 
 	const opacityIn = scrollY.interpolate({
 		inputRange: [0, 128],
@@ -27,7 +27,7 @@ const Home = () => {
 	});
 
 	return (
-		<React.Fragment>
+		<Fragment>
 			{device.iPhoneNotch && (
 				<Animated.View
 					style={[styles.iPhoneNotch, { opacity: opacityIn }]}
@@ -68,7 +68,7 @@ const Home = () => {
 					tagline="Your top listens from the past few months."
 				/>
 			</Animated.ScrollView>
-		</React.Fragment>
+		</Fragment>
 	);
 };
 

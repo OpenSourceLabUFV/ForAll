@@ -13,7 +13,7 @@ import SpotifyRoutes from '../routes/SpotifyRoutes';
 
 const initSpotifyData = async () => {
 	try {
-		const isInitialized = await getSpotifyData('isInitialized');
+		const isInitialized = JSON.parse(await getSpotifyData('isInitialized'));
 
 		if (!isInitialized) {
 			const spotifyRedirectURI = SPOTIFY_REDIRECT_URI;
@@ -45,6 +45,7 @@ const initSpotifyData = async () => {
 				'spotify_permission',
 				JSON.stringify(JSON.stringify(SPOTIFY_PERMISSION_SCOPE))
 			);
+
 			await AsyncStorage.setItem('isInitialized', JSON.stringify(true));
 		}
 	} catch (error) {
@@ -71,9 +72,9 @@ const getSpotifyAuthorizationRoute = async () => {
 	const scope = await getSpotifyData('spotify_permission');
 
 	let authRoute = `${SpotifyRoutes.authorization}?response_type=code&show_dialog=true`;
-	authRoute += `&client_id=${clientID}`;
-	authRoute += `&redirect_uri=${redirectURI}`;
-	authRoute += `&scope=${scope}`;
+	authRoute += `&client_id=${clientID.replace(/['"]+/g, '')}`;
+	authRoute += `&redirect_uri=${redirectURI.replace(/['"]+/g, '')}`;
+	authRoute += `&scope=${JSON.parse(scope).replace(/['"]+/g, '')}`;
 	authRoute += `&code_challenge_method=S256&code_challenge=${codeChallenge}`;
 
 	return { codeChallenge, codeVerifier, authRoute };

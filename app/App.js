@@ -8,14 +8,15 @@ import RootStack from './src/navigation/RootStack';
 import LoginWebView from './src/screens/login/loginWebView';
 
 import StartUpService from './src/services/StartUpService';
+import LoginService from './src/services/LoginService';
 
 const App = () => {
 	const [isLoading, setIsLoading] = useState(true);
+	const [isServicesRunning, setIsServicesRunning] = useState(false);
 	const [isLogged_, setIsLogged_] = useState(false);
 
 	// pre-loading assets/fonts?
 	if (isLoading) {
-		StartUpService.startup();
 		return (
 			<AppLoading
 				onError={() => {
@@ -26,6 +27,16 @@ const App = () => {
 			/>
 		);
 	}
+
+	if (isServicesRunning) {
+		StartUpService.startup().then((resp) => {
+			setIsServicesRunning(resp);
+		});
+	}
+
+	LoginService.handleAppLogin().then((resp) => {
+		setIsLogged_(resp);
+	});
 
 	if (!isLogged_) {
 		return <LoginWebView setIsLogged_={setIsLogged_} />;

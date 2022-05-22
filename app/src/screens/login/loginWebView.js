@@ -1,108 +1,66 @@
-import React from 'react';
-import axios from 'axios';
+import React, { useState } from 'react';
+import { ActivityIndicator, Text, View } from 'react-native';
+// import axios from 'axios';
+
+// import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { WebView } from 'react-native-webview';
-import { Buffer } from 'buffer';
+// import { Buffer } from 'buffer';
 
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import SpotifyService from '../../services/SpotifyService';
-import SpotifyRoutes from '../../routes/SpotifyRoutes';
+// import SpotifyRoutes from '../../routes/SpotifyRoutes';
 
-const queryString = require('query-string');
+import LoginService from '../../services/LoginService';
+
+// const queryString = require('query-string');
 
 // eslint-disable-next-line react/prop-types
 const LoginWebView = ({ setIsLogged_ }) => {
-	const { codeVerifier, authRoute } =
-		SpotifyService.getSpotifyAuthorizationRoute();
+	const [loginWebViewState, setLoginWebViewState] = useState({
+		pageIsLoading: true
+	});
 
-	const onNavigationStateChange = (navigationState) => {
+	const [uriData, setUriData] = useState();
+
+	const handleUriData = async () => {
+		await SpotifyService.getSpotifyAuthorizationRoute().then((resp) => {
+			setUriData({
+				codeVerifier: resp.codeVerifier,
+				authRoute: encodeURI(resp.authRoute)
+			});
+			setLoginWebViewState((prevState) => ({
+				...prevState,
+				pageIsLoading: false
+			}));
+		});
+	};
+
+	if (loginWebViewState.pageIsLoading) {
+		handleUriData();
+	}
+
+	const onNavigationStateChange = async (navigationState) => {
 		const { url } = navigationState;
 		if (url.includes('code=')) {
-			try {
-				const regex = /[?&]([^=#]+)=([^&#]*)/g;
-				const params = {};
-				let match;
-				// eslint-disable-next-line no-cond-assign
-				while ((match = regex.exec(url))) {
-					// eslint-disable-next-line prefer-destructuring
-					params[match[1]] = match[2];
-				}
-				console.log('url', url);
-				const authCode = params.code;
-				SpotifyService.setSpotifyData('spotifyAuthCode', authCode);
-
-				getToken(authCode);
-			} catch (err) {
-				console.log(err);
-			}
+			LoginService.getCodeFromURI(url, uriData).then((resp) => {
+				setIsLogged_(resp);
+			});
 		}
 	};
 
-	const getToken = async (codeData) => {
-		const redirectURI = SpotifyService.getSpotifyData(
-			'spotify_redirect_uri'
+	if (loginWebViewState.pageIsLoading) {
+		return (
+			<View>
+				<ActivityIndicator size="large" color="000" />
+				<Text>Loading</Text>
+			</View>
 		);
-		const data = queryString.stringify({
-			code: codeData,
-			grant_type: 'authorization_code',
-			redirect_uri: redirectURI,
-			code_verifier: codeVerifier
-		});
-
-		const config = {
-			headers: {
-				'Content-Type': 'application/x-www-form-urlencoded',
-				Authorization: `Basic ${Buffer.from(
-					`${SpotifyService.getSpotifyData(
-						'spotify_client_id'
-					)}:${SpotifyService.getSpotifyData(
-						'spotify_client_secret'
-					)}`,
-					'utf8'
-				).toString('base64')}`
-			}
-		};
-
-		await axios
-			.post(SpotifyRoutes.token, data, config)
-			.then((response) => {
-				if (response.status === 200) {
-					console.log(response.data);
-
-					AsyncStorage.setItem(
-						'access_token',
-						JSON.stringify(response.data.access_token)
-					);
-
-					AsyncStorage.setItem(
-						'expires_in',
-						JSON.stringify(response.data.expires_in)
-					);
-					AsyncStorage.setItem(
-						'token_type',
-						JSON.stringify(response.data.token_type)
-					);
-					AsyncStorage.setItem(
-						'spotify_refresh_token',
-						JSON.stringify(response.data.refresh_token)
-					);
-					AsyncStorage.setItem('isLogged', JSON.stringify(true));
-
-					// On true the screen will be redirected to the app home
-					setIsLogged_(true);
-				} else if (response.status === 400) {
-					console.log(response);
-				}
-			})
-			.catch((error) => {
-				console.log(error.response.data);
-			});
-	};
+	}
 
 	return (
 		<>
 			<WebView
-				source={{ uri: authRoute }}
+				source={{ uri: uriData.authRoute }}
 				onNavigationStateChange={onNavigationStateChange}
 			/>
 		</>
