@@ -61,7 +61,7 @@ https://github.com/matt-eric/web-audio-fft-visualization-with-react-hooks.git)
 |Nome   |Função   |Obrigatoria | Referência
 |---|---|---|---|
 |  CLEAN_DATA | Limpa o armazenamento de dados do app  |  NÃO | - |
-|  SPOTIFY_REDIRECT_URI | Necessario para a conecção com o Spotify | SIM | [Developer Spotify](https://developer.spotify.com/)
-|  SPOTIFY_CLIENT_ID | Necessario para fazer requisições para a api do Spotify | SIM | [Developer Spotify](https://developer.spotify.com/)
-|  SPOTIFY_CLIENTE_SECRET | Necessario para fazer requisições para a api do Spotify | SIM | [Developer Spotify](https://developer.spotify.com/)
+|  SPOTIFY_REDIRECT_URI | Necessário para a conexão com o Spotify | SIM | [Developer Spotify](https://developer.spotify.com/)
+|  SPOTIFY_CLIENT_ID |  Necessário para fazer requisições para a api do Spotify | SIM | [Developer Spotify](https://developer.spotify.com/)
+|  SPOTIFY_CLIENTE_SECRET |  Necessário para fazer requisições para a api do Spotify | SIM | [Developer Spotify](https://developer.spotify.com/)
 |  SPOTIFY_PERMISSION_SCOPE |  Definição das permissões entre o relacionamento da aplicação com o Spotify | SIM | [Developer Spotify Authorization Scopes](https://developer.spotify.com/documentation/general/guides/authorization/scopes/)
