@@ -1,10 +1,5 @@
-import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { Buffer } from 'buffer';
 import SpotifyService from './SpotifyService';
-import SpotifyRoutes from '../routes/SpotifyRoutes';
-
-const queryString = require('query-string');
 
 const handleAppLogin = async () => {
 	const userHasPreviouslyLogin = await SpotifyService.getSpotifyData(
@@ -14,7 +9,8 @@ const handleAppLogin = async () => {
 	return JSON.parse(userHasPreviouslyLogin);
 };
 
-const getCodeFromURI = async (url, uriData) => {
+const getCodeFromURI = async (url) => {
+	console.log('url', url);
 	try {
 		const regex = /[?&]([^=#]+)=([^&#]*)/g;
 		const params = {};
@@ -26,14 +22,28 @@ const getCodeFromURI = async (url, uriData) => {
 			params[match[1]] = match[2];
 		}
 
-		const authCode = params.code;
+		const expireTime = params.expires_in;
 
 		await AsyncStorage.setItem(
-			'spotifyAuthCode',
-			JSON.stringify(JSON.stringify(authCode))
+			'spotify_access_token',
+			JSON.stringify(params.access_token)
 		);
 
-		return getToken(authCode, uriData);
+		await AsyncStorage.setItem(
+			'spotify_expires_in',
+			JSON.stringify(expireTime)
+		);
+		let d = new Date();
+		d = new Date(d.getTime() + JSON.parse(expireTime) * 1000);
+
+		await AsyncStorage.setItem(
+			'spotify_token_expires_time',
+			JSON.stringify(d)
+		);
+		await AsyncStorage.setItem('isLogged', JSON.stringify(true));
+
+		return true;
+		// return getToken(authCode, uriData);
 	} catch (err) {
 		console.log(err);
 	}
@@ -41,74 +51,90 @@ const getCodeFromURI = async (url, uriData) => {
 	return false;
 };
 
-const getToken = async (codeData, uriData) => {
-	const redirectURI = await SpotifyService.getSpotifyData(
-		'spotify_redirect_uri'
-	);
+// const getToken = async (codeData, uriData) => {
+// 	let redirectURI = await SpotifyService.getSpotifyData(
+// 		'spotify_redirect_uri'
+// 	);
+// 	redirectURI = redirectURI.replace(/['"]+/g, '');
 
-	const spotifyClientID = await SpotifyService.getSpotifyData(
-		'spotify_client_id'
-	);
+// 	let spotifyClientID = await SpotifyService.getSpotifyData(
+// 		'spotify_client_id'
+// 	);
+// 	spotifyClientID = spotifyClientID.replace(/['"]+/g, '');
 
-	const spotifyClientSecret = await SpotifyService.getSpotifyData(
-		'spotify_client_secret'
-	);
+// 	let spotifyClientSecret = await SpotifyService.getSpotifyData(
+// 		'spotify_client_secret'
+// 	);
+// 	spotifyClientSecret = spotifyClientSecret.replace(/['"]+/g, '');
 
-	const data = queryString.stringify({
-		code: codeData,
-		grant_type: 'authorization_code',
-		redirect_uri: encodeURI(redirectURI.replace(/['"]+/g, '')),
-		code_verifier: uriData.codeVerifier
-	});
+// 	console.log('codeData', codeData);
 
-	const config = {
-		headers: {
-			'Content-Type': 'application/x-www-form-urlencoded',
-			Authorization: `Basic ${Buffer.from(
-				`${spotifyClientID.replace(
-					/['"]+/g,
-					''
-				)}:${spotifyClientSecret.replace(/['"]+/g, '')}`,
-				'utf8'
-			).toString('base64')}`
-		}
-	};
+// 	const data = queryString.stringify({
+// 		grant_type: 'authorization_code',
+// 		code: codeData,
+// 		redirect_uri: encodeURI(redirectURI)
+// 		// code_verifier: uriData.codeVerifier,
+// 		// client_id: spotifyClientID
+// 	});
 
-	let sucessLogin = false;
-	await axios
-		.post(SpotifyRoutes.token, data, config)
-		.then((response) => {
-			if (response.status === 200) {
-				AsyncStorage.setItem(
-					'access_token',
-					JSON.stringify(response.data.access_token)
-				);
+// 	console.log('data', data);
 
-				AsyncStorage.setItem(
-					'expires_in',
-					JSON.stringify(response.data.expires_in)
-				);
-				AsyncStorage.setItem(
-					'token_type',
-					JSON.stringify(response.data.token_type)
-				);
-				AsyncStorage.setItem(
-					'spotify_refresh_token',
-					JSON.stringify(response.data.refresh_token)
-				);
-				AsyncStorage.setItem('isLogged', JSON.stringify(true));
+// 	const config = {
+// 		headers: {
+// 			'Content-Type': 'application/x-www-form-urlencoded',
+// 			Authorization: `Basic ${Buffer.from(
+// 				`${spotifyClientID}:${spotifyClientSecret}`
+// 			).toString('base64')}`
+// 		}
+// 	};
 
-				sucessLogin = true;
-			}
-			if (response.status === 400) {
-				console.log('ERROR: ', response);
-			}
-		})
-		.catch((error) => {
-			console.log(error.response);
-		});
+// 	console.log('config', config);
 
-	return sucessLogin;
-};
+// 	let sucessLogin = false;
+// 	await axios
+// 		.post(SpotifyRoutes.token, data, config)
+// 		.then((response) => {
+// 			if (response.status === 200) {
+// 				AsyncStorage.setItem(
+// 					'spotify_access_token',
+// 					JSON.stringify(response.data.access_token)
+// 				);
+// 				AsyncStorage.setItem(
+// 					'spotify_expires_in',
+// 					JSON.stringify(response.data.expires_in)
+// 				);
+// 				let d = Date.now();
+// 				d = new Date(
+// 					d.getTime() + JSON.parse(response.data.expires_in) * 1000
+// 				);
+// 				console.log('spotify_expires_in', response.data.expires_in);
+// 				console.log('expire on', d);
+
+// 				AsyncStorage.setItem(
+// 					'spotify_token_expires_time',
+// 					JSON.stringify(d)
+// 				);
+// 				AsyncStorage.setItem(
+// 					'spotify_token_type',
+// 					JSON.stringify(response.data.token_type)
+// 				);
+// 				AsyncStorage.setItem(
+// 					'spotify_refresh_token',
+// 					JSON.stringify(response.data.refresh_token)
+// 				);
+// 				AsyncStorage.setItem('isLogged', JSON.stringify(true));
+
+// 				sucessLogin = true;
+// 			}
+// 			if (response.status === 400) {
+// 				console.log('ERROR: ', response.data);
+// 			}
+// 		})
+// 		.catch((error) => {
+// 			console.log(error.response.data);
+// 		});
+
+// 	return sucessLogin;
+// };
 
 export default { handleAppLogin, getCodeFromURI };

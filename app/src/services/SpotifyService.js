@@ -71,11 +71,13 @@ const getSpotifyAuthorizationRoute = async () => {
 	const redirectURI = await getSpotifyData('spotify_redirect_uri');
 	const scope = await getSpotifyData('spotify_permission');
 
-	let authRoute = `${SpotifyRoutes.authorization}?response_type=code&show_dialog=true`;
+	let authRoute = `${SpotifyRoutes.authorization}?response_type=token&show_dialog=true`;
 	authRoute += `&client_id=${clientID.replace(/['"]+/g, '')}`;
-	authRoute += `&redirect_uri=${redirectURI.replace(/['"]+/g, '')}`;
+	authRoute += `&redirect_uri=${encodeURI(
+		redirectURI.replace(/['"]+/g, '')
+	)}`;
 	authRoute += `&scope=${JSON.parse(scope).replace(/['"]+/g, '')}`;
-	authRoute += `&code_challenge_method=S256&code_challenge=${codeChallenge}`;
+	// authRoute += `&code_challenge_method=S256&code_challenge=${codeChallenge}`;
 
 	return { codeChallenge, codeVerifier, authRoute };
 };

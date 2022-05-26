@@ -39,7 +39,7 @@ yarn install
 Antes de iniciar o desenvolvimente é preciso que as variaveis de ambinte estejam configuradas corretamente, para isso faça uma copia do arquivo ```.env-sample``` e o renomeie para ```.env```. 
 
 ### Observações
-Ao executar o Expo durante o desenvolvimento é recomendo a utilização do commando ```expo start -c ``` a fim de sempre limpar o cache no incio de cada execução. Ao limpar o cache do Expo o APP garante que as variaveis de ambiente serão intanciadas corretamente, dessa forma podendo evitar alguns problemas. Consulta a seção [Variaveis de Ambiente](#Variaveis-de-Ambiente)
+Ao executar o Expo durante o desenvolvimento é recomendo a utilização do commando ```expo start -c``` a fim de sempre limpar o cache no incio de cada execução. Ao limpar o cache do Expo o APP garante que as variaveis de ambiente serão intanciadas corretamente, dessa forma podendo evitar alguns problemas. Consulte a seção [Variaveis de Ambiente](#Variaveis-de-Ambiente) para mais detalhes.
 
 
 ## Binarios

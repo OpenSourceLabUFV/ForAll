@@ -1,52 +1,77 @@
 import axios from 'axios';
-import { Buffer } from 'buffer';
+import { useState } from 'react';
 import SpotifyService from '../services/SpotifyService';
 import SpotifyRoutes from '../routes/SpotifyRoutes';
 
 const getDefaultRequestConfiguration = async () => {
-	const spotifyClientID = await SpotifyService.getSpotifyData(
-		'spotify_client_id'
-	);
-
-	const spotifyClientSecret = await SpotifyService.getSpotifyData(
-		'spotify_client_secret'
+	const spotifyAccessToken = await SpotifyService.getSpotifyData(
+		'spotify_access_token'
 	);
 
 	const config = {
 		headers: {
 			'Content-Type': 'application/json',
-			Authorization: `Basic ${Buffer.from(
-				`${spotifyClientID.replace(
-					/['"]+/g,
-					''
-				)}:${spotifyClientSecret.replace(/['"]+/g, '')}`,
-				'utf8'
-			).toString('base64')}`
+			Authorization: `Bearer ${spotifyAccessToken.replace(/['"]+/g, '')}`
 		}
 	};
 
 	return config;
 };
 
+// const tokenIsValid = async () => {
+// 	const spotifyAccessToken = await SpotifyService.getSpotifyData(
+// 		'spotify_access_token'
+// 	);
+
+// 	const spotifyAccessToken = await SpotifyService.getSpotifyData(
+// 		'spotify_access_token'
+// 	);
+
+// 	console.log(spotifyAccessToken);
+// };
+
 const getRecentlyPlayed = async () => {
 	const config = await getDefaultRequestConfiguration();
-	console.log('config', config);
-	console.log(`${SpotifyRoutes.recentlyPlayed}?limit=10`);
+	// const [isResponse, setResponse] = useState();
+
 	const response = await axios
 		.get(`${SpotifyRoutes.recentlyPlayed}?limit=10`, config)
 		.then((resp) => {
-			console.log(resp);
+			// console.log(resp);
 			if (resp.status === 200) {
-				console.log(resp.data);
+				console.log(resp.data.items);
+				return resp.data.items;
 			}
+
+			return undefined;
 		})
 		.catch((error) => {
 			console.log(error);
 		});
 
-	console.log(response);
+	const recentlyPlayedItems = [];
+	response.forEach((element) => {
+		// const trackName = element.track.name;
+		const title = element.track.album.name;
+		const { id } = element.track.album;
+		const image = element.track.album.images[0].url;
+		recentlyPlayedItems.push({
+			title,
+			id,
+			image
+		});
+		console.log(title, id, image);
+	});
 
-	return response;
+	// "images": Array [
+	// 	Object {
+	// 	  "height": 640,
+	// 	  "url": "https://i.scdn.co/image/ab67616d0000b2735d48e2f56d691f9a4e4b0bdf",
+	// 	  "width": 640,
+	// 	},
+
+	// console.log(isResponse);
+	return recentlyPlayedItems;
 };
 
 export default { getRecentlyPlayed };

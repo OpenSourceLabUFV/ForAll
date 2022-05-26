@@ -28,7 +28,7 @@ const App = () => {
 		);
 	}
 
-	if (isServicesRunning) {
+	if (!isServicesRunning) {
 		StartUpService.startup().then((resp) => {
 			setIsServicesRunning(resp);
 		});

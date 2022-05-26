@@ -1,4 +1,4 @@
-import React, { useRef, Fragment } from 'react';
+import React, { useRef, useState, Fragment, useEffect } from 'react';
 import { Animated, StyleSheet, View } from 'react-native';
 import { FontAwesome } from '@expo/vector-icons';
 import { colors, device, gStyle } from '../../constants';
@@ -9,9 +9,13 @@ import AlbumsHorizontal from '../../components/general/AlbumsHorizontal';
 // mock data
 import heavyRotation from '../../mockdata/heavyRotation.json';
 import jumpBackIn from '../../mockdata/jumpBackIn.json';
-import recentlyPlayed from '../../mockdata/recentlyPlayed.json';
+// import recentlyPlayed from '../../mockdata/recentlyPlayed.json';
+
+import SpotifyData from '../../api/SpotifyData';
 
 const Home = () => {
+	const [recentlyPlayed, setRecentlyPlayed] = useState();
+
 	const scrollY = useRef(new Animated.Value(0)).current;
 
 	const opacityIn = scrollY.interpolate({
@@ -25,6 +29,13 @@ const Home = () => {
 		outputRange: [1, 0],
 		extrapolate: 'clamp'
 	});
+
+	useEffect(() => {
+		SpotifyData.getRecentlyPlayed().then((resp) => {
+			setRecentlyPlayed(resp);
+			console.log(resp.length);
+		});
+	}, []);
 
 	return (
 		<Fragment>
@@ -51,10 +62,13 @@ const Home = () => {
 			>
 				<View style={gStyle.spacer16} />
 
-				<AlbumsHorizontal
-					data={recentlyPlayed}
-					heading="Recently played"
-				/>
+				{recentlyPlayed !== undefined && recentlyPlayed.length > 0 && (
+					<AlbumsHorizontal
+						data={recentlyPlayed}
+						heading="Recently played"
+						imageSource="web"
+					/>
+				)}
 
 				<AlbumsHorizontal
 					data={heavyRotation}

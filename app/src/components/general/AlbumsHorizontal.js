@@ -11,7 +11,7 @@ import {
 import { useNavigation } from '@react-navigation/native';
 import { colors, gStyle, images } from '../../constants';
 
-const AlbumsHorizontal = ({ data, heading, tagline }) => {
+const AlbumsHorizontal = ({ data, heading, tagline, imageSource }) => {
 	const navigation = useNavigation();
 
 	return (
@@ -34,7 +34,13 @@ const AlbumsHorizontal = ({ data, heading, tagline }) => {
 						style={styles.item}
 					>
 						<View style={styles.image}>
-							{item.image && (
+							{item.image && imageSource === 'web' && (
+								<Image
+									source={{ uri: item.image }}
+									style={styles.image}
+								/>
+							)}
+							{item.image && imageSource !== 'web' && (
 								<Image
 									source={images[item.image]}
 									style={styles.image}
@@ -52,7 +58,8 @@ const AlbumsHorizontal = ({ data, heading, tagline }) => {
 
 AlbumsHorizontal.defaultProps = {
 	heading: null,
-	tagline: null
+	tagline: null,
+	imageSource: null
 };
 
 AlbumsHorizontal.propTypes = {
@@ -61,7 +68,8 @@ AlbumsHorizontal.propTypes = {
 
 	// optional
 	heading: PropTypes.string,
-	tagline: PropTypes.string
+	tagline: PropTypes.string,
+	imageSource: PropTypes.string
 };
 
 const styles = StyleSheet.create({

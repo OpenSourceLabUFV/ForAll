@@ -41,8 +41,11 @@ const LoginWebView = ({ setIsLogged_ }) => {
 
 	const onNavigationStateChange = async (navigationState) => {
 		const { url } = navigationState;
-		if (url.includes('code=')) {
-			LoginService.getCodeFromURI(url, uriData).then((resp) => {
+		const newUrl = url.replace('#', '?');
+		console.log(newUrl);
+
+		if (newUrl.includes('access_token=')) {
+			LoginService.getCodeFromURI(newUrl).then((resp) => {
 				setIsLogged_(resp);
 			});
 		}
